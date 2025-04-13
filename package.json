@@ -1,7 +1,7 @@
 {
-  "name": "todo-list-analyzer",
+  "name": "smart-todo-list",
   "version": "1.0.0",
-  "description": "A responsive todo list with analyzer",
+  "description": "A responsive todo list with weekly analyzer",
   "source": "index.html",
   "scripts": {
     "start": "parcel --port 3001",
@@ -11,9 +11,6 @@
     "chart.js": "^3.9.1"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.21",
-    "parcel": "^2.11.0",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.3"
+    "parcel": "^2.8.3"
   }
 }

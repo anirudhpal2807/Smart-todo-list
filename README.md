@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Smart Todo List with Analyzer
 
 A responsive web application for managing tasks with sophisticated analysis features to help you better understand your productivity patterns and optimize your workflow using the Eisenhower Matrix methodology.
@@ -84,10 +82,21 @@ This project was developed by Anirudh Pal, a B.Tech student at IIIT Nagpur speci
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. 
-=======
-# Smart-todo-list
->>>>>>> 6227a973881d84aad8c9831ae87ac5edc7ec1fac
-=======
-# Smart-todo-list
->>>>>>> b9c6647ac634db394b49d5fcd8905be90b86e704
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Deployment
+
+### Deploying to Netlify
+
+This project is configured for easy deployment on Netlify:
+
+1. Fork or clone this repository
+2. Sign up/Log in to [Netlify](https://www.netlify.com/)
+3. Click "New site from Git"
+4. Select your repository
+5. Keep the default settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+6. Click "Deploy site"
+
+The site will be built and deployed automatically. Any future pushes to your repository will trigger automatic redeployments.
