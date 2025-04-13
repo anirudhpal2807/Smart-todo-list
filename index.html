@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART TODO LIST WITH WEEKLY ANALYZER</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SMART TODO LIST</h1>
+            <p>ORGANIZE TASKS AND ANALYZE YOUR PRODUCTIVITY</p>
+        </header>
+
+        <div class="view-toggle">
+            <button class="view-btn active" data-view="daily">Daily View</button>
+            <button class="view-btn" data-view="weekly">Weekly View</button>
+            <button class="view-btn" data-view="matrix">Priority Matrix</button>
+            <button class="view-btn" data-view="monthly">Monthly View</button>
+        </div>
+
+        <div class="main-content">
+            <div class="todo-section">
+                <div class="input-section">
+                    <input type="text" id="taskInput" placeholder="Add a new task...">
+                    <input type="date" id="taskDate">
+                    <select id="taskPriority">
+                        <option value="none">Priority</option>
+                        <option value="urgent-important">Urgent & Important</option>
+                        <option value="not-urgent-important">Not Urgent but Important</option>
+                        <option value="urgent-not-important">Urgent but Not Important</option>
+                        <option value="not-urgent-not-important">Not Urgent & Not Important</option>
+                    </select>
+                    <button id="addTask"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All <span class="task-count" id="allTaskCount">0</span></button>
+                    <button class="filter-btn" data-filter="active">Active <span class="task-count" id="activeTaskCount">0</span></button>
+                    <button class="filter-btn" data-filter="completed">Completed <span class="task-count" id="completedTaskCount">0</span></button>
+                </div>
+                <div id="dailyView" class="task-view active">
+                    <div class="daily-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Today's Tasks:</span>
+                            <span class="summary-value" id="todayTaskCount">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Completed:</span>
+                            <span class="summary-value success" id="todayCompletedCount">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Active:</span>
+                            <span class="summary-value warning" id="todayActiveCount">0</span>
+                        </div>
+                    </div>
+                    <ul id="taskList"></ul>
+                </div>
+                <div id="weeklyView" class="task-view">
+                    <div class="week-container">
+                        <div class="week-header">
+                            <button id="prevWeek"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="weekRange">Week of ...</h3>
+                            <button id="nextWeek"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="week-grid">
+                            <div class="day-column" data-day="0">
+                                <h4>Sunday</h4>
+                                <ul class="day-tasks"></ul>
+                            </div>
+                            <div class="day-column" data-day="1">
+                                <h4>Monday</h4>
+                                <ul class="day-tasks"></ul>
+                            </div>
+                            <div class="day-column" data-day="2">
+                                <h4>Tuesday</h4>
+                                <ul class="day-tasks"></ul>
+                            </div>
+                            <div class="day-column" data-day="3">
+                                <h4>Wednesday</h4>
+                                <ul class="day-tasks"></ul>
+                            </div>
+                            <div class="day-column" data-day="4">
+                                <h4>Thursday</h4>
+                                <ul class="day-tasks"></ul>
+                            </div>
+                            <div class="day-column" data-day="5">
+                                <h4>Friday</h4>
+                                <ul class="day-tasks"></ul>
+                            </div>
+                            <div class="day-column" data-day="6">
+                                <h4>Saturday</h4>
+                                <ul class="day-tasks"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="matrixView" class="task-view">
+                    <div class="matrix-container">
+                        <h3 class="matrix-title">Priority Matrix</h3>
+                        <div class="priority-matrix">
+                            <div class="matrix-quadrant" id="quadrant1">
+                                <h4>Quadrant 1: URGENT & IMPORTANT</h4>
+                                <p class="matrix-desc">Do First - Critical tasks that need immediate attention</p>
+                                <ul class="matrix-tasks"></ul>
+                            </div>
+                            <div class="matrix-quadrant" id="quadrant2">
+                                <h4>Quadrant 2: NOT URGENT BUT IMPORTANT</h4>
+                                <p class="matrix-desc">Schedule - Strategic tasks for long-term goals</p>
+                                <ul class="matrix-tasks"></ul>
+                            </div>
+                            <div class="matrix-quadrant" id="quadrant3">
+                                <h4>Quadrant 3: URGENT BUT NOT IMPORTANT</h4>
+                                <p class="matrix-desc">Delegate - Tasks that can be assigned to others</p>
+                                <ul class="matrix-tasks"></ul>
+                            </div>
+                            <div class="matrix-quadrant" id="quadrant4">
+                                <h4>Quadrant 4: NOT URGENT & NOT IMPORTANT</h4>
+                                <p class="matrix-desc">Eliminate - Distractions that waste time</p>
+                                <ul class="matrix-tasks"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="monthlyView" class="task-view">
+                    <div class="month-container">
+                        <div class="month-header">
+                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="monthDisplay">Month of ...</h3>
+                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="month-calendar">
+                            <div class="calendar-header">
+                                <div>Sun</div>
+                                <div>Mon</div>
+                                <div>Tue</div>
+                                <div>Wed</div>
+                                <div>Thu</div>
+                                <div>Fri</div>
+                                <div>Sat</div>
+                            </div>
+                            <div class="calendar-body" id="calendarDays">
+                                <!-- Calendar days will be generated here -->
+                            </div>
+                        </div>
+                        <div class="month-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">Month's Tasks:</span>
+                                <span class="summary-value" id="monthTaskCount">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Completed:</span>
+                                <span class="summary-value success" id="monthCompletedCount">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Active:</span>
+                                <span class="summary-value warning" id="monthActiveCount">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analyzer-section">
+                <h2>TASK ANALYZER</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>Total Tasks</h3>
+                        <p id="totalTasks">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Completed</h3>
+                        <p id="completedTasks">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Completion Rate</h3>
+                        <p id="completionRate">0%</p>
+                    </div>
+                </div>
+                <div class="analyzer-tabs">
+                    <button class="analyzer-tab active" data-tab="daily">Daily Analysis</button>
+                    <button class="analyzer-tab" data-tab="weekly">Weekly Analysis</button>
+                    <button class="analyzer-tab" data-tab="monthly">Monthly Analysis</button>
+                </div>
+                <div class="analyzer-content">
+                    <div id="dailyAnalysis" class="analysis-view active">
+                        <div class="chart-container">
+                            <div class="bar-chart">
+                                <h3>Task Completion Trend</h3>
+                                <div class="productivity-chart">
+                                    <canvas id="dailyChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="pie-chart">
+                                <h3>Daily Task Distribution</h3>
+                                <div class="distribution-chart">
+                                    <canvas id="dailyPieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="daily-stats">
+                            <h3>Today's Progress</h3>
+                            <div class="progress-bar">
+                                <div id="todayProgress" class="progress"></div>
+                            </div>
+                            <p id="todayStats">0/0 tasks completed</p>
+                        </div>
+                    </div>
+                    <div id="weeklyAnalysis" class="analysis-view">
+                        <div class="chart-container">
+                            <div class="line-chart">
+                                <h3>Weekly Completion Trend</h3>
+                                <div class="productivity-chart">
+                                    <canvas id="weeklyChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="pie-chart">
+                                <h3>Weekly Task Distribution</h3>
+                                <div class="distribution-chart">
+                                    <canvas id="weeklyPieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weekly-stats">
+                            <h3>Weekly Overview</h3>
+                            <div class="week-stats-grid">
+                                <div class="week-stat">
+                                    <h4>Most Productive Day</h4>
+                                    <p id="mostProductiveDay">-</p>
+                                </div>
+                                <div class="week-stat">
+                                    <h4>Weekly Goal Progress</h4>
+                                    <p id="weeklyGoalProgress">0%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="monthlyAnalysis" class="analysis-view">
+                        <div class="chart-container">
+                            <div class="bar-chart">
+                                <h3>Monthly Completion Trend</h3>
+                                <div class="productivity-chart">
+                                    <canvas id="monthlyChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="pie-chart">
+                                <h3>Monthly Task Distribution</h3>
+                                <div class="distribution-chart">
+                                    <canvas id="monthlyPieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="monthly-stats">
+                            <h3>Monthly Overview</h3>
+                            <div class="month-stats-grid">
+                                <div class="month-stat">
+                                    <h4>Most Productive Week</h4>
+                                    <p id="mostProductiveWeek">-</p>
+                                </div>
+                                <div class="month-stat">
+                                    <h4>Priority Focus</h4>
+                                    <p id="priorityFocus">-</p>
+                                </div>
+                                <div class="month-stat">
+                                    <h4>Monthly Goal Progress</h4>
+                                    <p id="monthlyGoalProgress">0%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>About Me</h3>
+                <p>My name is Anirudh Pal, and I am currently pursuing a Bachelor of Technology in Electronics and Communication Engineering (with a specialization in IoT) at IIIT Nagpur, with an expected graduation in 2026.</p>
+                <p>I am deeply passionate about coding, Data Structures and Algorithms (DSA), and full-stack development. I have a particular interest in frontend technologies, especially working with HTML, CSS, JavaScript, React, and TypeScript.</p>
+                <p>I am actively preparing for technical interviews in the frontend and full-stack development domains, continuously improving my problem-solving skills and hands-on experience through real-world projects and practice.</p>
+                <p>View my portfolio: <a href="https://codolio.com/profile/Anirudhpaul" target="_blank">Codolio Profile</a></p>
+            </div>
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> Email: palanirudh8299@gmail.com</p>
+                <p><i class="fas fa-phone"></i> Phone: +919352418299</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/anirudh_jaiker/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/anirudh-pal-34310b238/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/anirudhpal2807" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://wa.me/919352418299" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Smart Todo List. Developed by <a href="https://github.com/anirudhpal2807" target="_blank">Anirudh Pal</a>. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html> 

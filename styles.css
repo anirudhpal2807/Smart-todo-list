@@ -1,0 +1,1292 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f5f6fa;
+    color: #2c3e50;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+    flex: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    color: #7f8c8d;
+}
+
+.view-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.view-btn {
+    padding: 0.5rem 1.5rem;
+    border: 2px solid #3498db;
+    background: none;
+    color: #3498db;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-btn.active {
+    background: #3498db;
+    color: white;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+    justify-content: center;
+    align-items: start;
+}
+
+.todo-section, .analyzer-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.analyzer-section > * {
+    max-width: 100%;
+}
+
+.input-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#taskInput {
+    flex: 1;
+    min-width: 180px;
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+#taskDate, #taskPriority {
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 1rem;
+    min-width: 140px;
+}
+
+#taskInput:focus, #taskDate:focus, #taskPriority:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+#addTask {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#addTask:hover {
+    background: #2980b9;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    width: 100%;
+}
+
+.filter-btn {
+    padding: 0.5rem 0.8rem;
+    border: none;
+    background: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.filter-btn.active {
+    background: #3498db;
+    color: white;
+}
+
+.filter-btn.active .task-count {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.task-view {
+    display: none;
+    width: 100%;
+}
+
+.task-view.active {
+    display: block;
+}
+
+#taskList {
+    list-style: none;
+    width: 100%;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.task-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.task-item.completed {
+    background-color: rgba(46, 204, 113, 0.05);
+}
+
+.task-item.completed span {
+    color: #7f8c8d;
+}
+
+.task-item input[type="checkbox"] {
+    margin-right: 1rem;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.task-item input[type="checkbox"]:checked {
+    background-color: #2ecc71;
+    border-color: #2ecc71;
+}
+
+.task-item input[type="checkbox"]:checked::after {
+    content: "✓";
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+}
+
+.task-date {
+    margin-left: 1rem;
+    color: #7f8c8d;
+    font-size: 0.85rem;
+}
+
+.delete-btn {
+    margin-left: auto;
+    color: #e74c3c;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.delete-btn:hover {
+    color: #c0392b;
+}
+
+/* Weekly View Styles */
+.week-container {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 100%;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.week-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    text-align: center;
+    width: 100%;
+}
+
+.week-header h3 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+}
+
+.week-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #3498db;
+    padding: 0.5rem;
+}
+
+.week-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+
+.day-column {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    min-height: 200px;
+    max-height: 50vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.day-column h4 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    width: 100%;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.day-tasks {
+    list-style: none;
+    width: 100%;
+}
+
+.day-tasks .task-item {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+}
+
+/* Analyzer Styles */
+.analyzer-section h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.analyzer-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    width: 100%;
+}
+
+.analyzer-tab {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.analyzer-tab.active {
+    background: #3498db;
+    color: white;
+}
+
+.analysis-view {
+    display: none;
+    width: 100%;
+}
+
+.analysis-view.active {
+    display: block;
+}
+
+.chart-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.bar-chart, .line-chart, .pie-chart {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.bar-chart h3, .line-chart h3, .pie-chart h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    width: 100%;
+    font-weight: 600;
+}
+
+.productivity-chart, .distribution-chart {
+    height: 250px;
+    width: 100% !important;
+    max-width: 100%;
+}
+
+/* Specific styles for distribution charts */
+.distribution-chart {
+    position: relative;
+    margin: 0 auto;
+    max-width: 90%;
+}
+
+.pie-chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.daily-stats, .weekly-stats, .monthly-stats {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.daily-stats h3, .weekly-stats h3, .monthly-stats h3 {
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.progress {
+    height: 100%;
+    background: #3498db;
+    transition: width 0.3s;
+}
+
+.week-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.week-stat {
+    text-align: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 5px;
+}
+
+/* Priority Selection Styles */
+#taskPriority {
+    padding: 0.8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: white;
+    width: auto;
+}
+
+#taskPriority:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Priority Matrix Styles */
+.matrix-container {
+    width: 100%;
+    padding: 1rem;
+}
+
+.matrix-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.priority-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    height: 500px;
+}
+
+.matrix-quadrant {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+#quadrant1 {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-left: 4px solid #e74c3c;
+}
+
+#quadrant2 {
+    background-color: rgba(46, 204, 113, 0.1);
+    border-left: 4px solid #2ecc71;
+}
+
+#quadrant3 {
+    background-color: rgba(241, 196, 15, 0.1);
+    border-left: 4px solid #f1c40f;
+}
+
+#quadrant4 {
+    background-color: rgba(149, 165, 166, 0.1);
+    border-left: 4px solid #95a5a6;
+}
+
+.matrix-quadrant h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.matrix-desc {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.matrix-tasks {
+    list-style: none;
+    flex: 1;
+}
+
+/* Monthly Analyzer Styles */
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    width: 100%;
+}
+
+.month-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #3498db;
+    padding: 0.5rem;
+}
+
+.month-header h4 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.5rem;
+}
+
+.month-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.month-stat {
+    text-align: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 5px;
+}
+
+.month-stat h4 {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+.month-stat p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Priority Task Items */
+.task-item.urgent-important {
+    border-left: 4px solid #e74c3c;
+}
+
+.task-item.not-urgent-important {
+    border-left: 4px solid #2ecc71;
+}
+
+.task-item.urgent-not-important {
+    border-left: 4px solid #f1c40f;
+}
+
+.task-item.not-urgent-not-important {
+    border-left: 4px solid #95a5a6;
+}
+
+/* Force full width for analyzer section */
+.main-content .analyzer-section {
+    width: 100%;
+    flex: 1;
+}
+
+/* Consistent heading styles */
+.analyzer-section h2, 
+.matrix-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+/* Additional responsive media query */
+@media (max-width: 480px) {
+    .view-btn, .filter-btn, .analyzer-tab {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .month-stat, .week-stat {
+        padding: 0.75rem;
+    }
+    
+    .month-stat h4, .week-stat h4 {
+        font-size: 0.8rem;
+    }
+    
+    .month-stat p, .week-stat p {
+        font-size: 1rem;
+    }
+    
+    .pie-chart {
+        padding: 1rem;
+        min-height: 320px;
+    }
+    
+    .distribution-chart {
+        max-width: 95%;
+        height: 280px;
+    }
+    
+    .week-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .day-column {
+        min-height: 150px;
+    }
+    
+    .week-header h3 {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        max-width: 95%;
+    }
+    .week-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .analyzer-section {
+        margin-top: 2rem;
+    }
+    .week-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        align-items: flex-start;
+        padding: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .container {
+        padding: 1rem;
+        flex: 1;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .view-toggle {
+        flex-wrap: wrap;
+    }
+    
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .todo-section, .analyzer-section {
+        padding: 1rem;
+    }
+
+    .input-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    #taskInput, #taskDate, #taskPriority, #addTask {
+        width: 100%;
+        min-width: 100%;
+    }
+    
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .distribution-chart {
+        max-width: 80%;
+        height: 300px;
+    }
+
+    .week-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .day-column {
+        margin-bottom: 1rem;
+    }
+
+    .priority-matrix {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        height: auto;
+        gap: 1rem;
+    }
+    
+    .matrix-quadrant {
+        margin-bottom: 1rem;
+        min-height: 200px;
+    }
+    
+    .month-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filters {
+        flex-wrap: wrap;
+    }
+    
+    .analyzer-tabs {
+        flex-wrap: wrap;
+    }
+
+    #dailyView, .day-column {
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .chart-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .pie-chart {
+        margin-bottom: 1rem;
+    }
+    
+    .distribution-chart {
+        max-width: 70%;
+        height: 280px;
+    }
+}
+
+.distribution-chart canvas {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+/* Responsive Daily View */
+#dailyView {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+#taskList {
+    padding: 0.5rem 0;
+}
+
+.task-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    margin-left: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.daily-summary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    flex: 1;
+    min-width: 80px;
+}
+
+.summary-label {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+.summary-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.summary-value.success {
+    color: #2ecc71;
+}
+
+.summary-value.warning {
+    color: #f39c12;
+}
+
+@media (max-width: 480px) {
+    .summary-item {
+        padding: 0.3rem;
+    }
+    
+    .summary-value {
+        font-size: 1.2rem;
+    }
+}
+
+/* Footer Styles */
+.site-footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.footer-section {
+    flex: 1;
+    margin-right: 2rem;
+    min-width: 250px;
+    margin-bottom: 1.5rem;
+}
+
+.footer-section.about {
+    flex: 2;
+}
+
+.footer-section h3 {
+    color: #3498db;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: #3498db;
+}
+
+.footer-section p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.footer-section a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #ecf0f1;
+    text-decoration: underline;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.7rem;
+}
+
+.footer-section ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #3498db;
+}
+
+.footer-section i {
+    margin-right: 0.5rem;
+}
+
+.social-icons {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    margin-right: 0.8rem;
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #3498db;
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1.5rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.footer-bottom p {
+    font-size: 0.9rem;
+}
+
+.footer-bottom a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+    color: #ecf0f1;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+    
+    .footer-section {
+        margin-right: 0;
+        margin-bottom: 2rem;
+    }
+}
+
+/* Monthly Calendar Styles */
+.month-container {
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.month-header h3 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.month-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #3498db;
+    padding: 0.5rem;
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 0.5rem 0;
+}
+
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-day {
+    min-height: 80px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.calendar-day:hover {
+    background-color: #f8f9fa;
+}
+
+.calendar-day.today {
+    border: 2px solid #3498db;
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.calendar-day.other-month {
+    opacity: 0.5;
+    background-color: #f5f5f5;
+}
+
+.calendar-date {
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.day-task-count {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #3498db;
+    color: white;
+    font-size: 0.7rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    max-height: 60px;
+    overflow-y: auto;
+}
+
+.calendar-task-item {
+    padding: 2px 5px;
+    margin-bottom: 2px;
+    border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.calendar-task-item:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+.calendar-task-item.completed {
+    text-decoration: line-through;
+    color: #7f8c8d;
+}
+
+.month-summary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+/* Responsive Calendar Styles */
+@media (max-width: 768px) {
+    .calendar-day {
+        min-height: 60px;
+    }
+    
+    .calendar-date {
+        font-size: 0.8rem;
+    }
+    
+    .day-task-count {
+        width: 18px;
+        height: 18px;
+        font-size: 0.6rem;
+    }
+    
+    .calendar-task-list {
+        max-height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-header div {
+        font-size: 0.8rem;
+    }
+    
+    .calendar-day {
+        min-height: 50px;
+    }
+    
+    .calendar-date {
+        font-size: 0.7rem;
+        margin-bottom: 2px;
+        padding-bottom: 2px;
+    }
+    
+    .calendar-task-list {
+        display: none;
+    }
+    
+    .day-task-count {
+        top: 3px;
+        right: 3px;
+        width: 15px;
+        height: 15px;
+        font-size: 0.6rem;
+    }
+}
+
+/* Monthly Stats Styles */
+.monthly-stats {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.monthly-stats h3 {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.month-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.month-stat {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.month-stat h4 {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+.month-stat p {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+/* Make sure the monthly analysis view is hidden by default */
+#monthlyAnalysis {
+    display: none;
+}
+
+#monthlyAnalysis.active {
+    display: block;
+} 
