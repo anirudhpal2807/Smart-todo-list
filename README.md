@@ -79,7 +79,7 @@ This project was developed by Anirudh Pal, a B.Tech student at IIIT Nagpur speci
 - GitHub: [anirudhpal2807](https://github.com/anirudhpal2807)
 - Portfolio: [Codolio Profile](https://codolio.com/profile/Anirudhpaul)
 - LinkedIn: [Anirudh Pal](https://www.linkedin.com/in/anirudh-pal-34310b238/)
-- website link:[https://taskly11.netlify.app/]
+- website link: https://taskly11.netlify.app/
 
 ## Contributing
 
