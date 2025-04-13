@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Smart Todo List with Analyzer
 
 A responsive web application for managing tasks with sophisticated analysis features to help you better understand your productivity patterns and optimize your workflow using the Eisenhower Matrix methodology.
@@ -87,3 +88,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 =======
 # Smart-todo-list
 >>>>>>> 6227a973881d84aad8c9831ae87ac5edc7ec1fac
+=======
+# Smart-todo-list
+>>>>>>> b9c6647ac634db394b49d5fcd8905be90b86e704
